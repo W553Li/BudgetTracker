@@ -65,7 +65,7 @@ export default function ViewExpensesModal ({budgetId, handleClose}) {
                     {expenses.map(expense => (
                         <Stack direction="horizontal" gap="2" key={expense.id}>
                             <div className="me-auto fs-4">{expense.description}
-                                <span className="text-muted fs-6 ms-1"> {expense.date} </span>
+                                <span className="text-muted fs-6 ms-1"> {expense.date}, Repeat: {expense.repeat} </span>
                             </div>
                             <div className="fs-5">{currencyFormatter.format(expense.amount)}</div>
                             <Button onClick={() => deleteExpense(expense)} size="sm" variant="outline-danger">&times;</Button>
