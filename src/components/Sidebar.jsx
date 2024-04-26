@@ -16,7 +16,7 @@ export default function Sidebar() {
         <CDBSidebar textColor="#fff" backgroundColor="#333">
             {/* Sidebar header */}
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-            <NavLink to="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+            <NavLink to="/BudgetTracker/" className="text-decoration-none" style={{ color: 'inherit' }}>
                 Home
             </NavLink>
             </CDBSidebarHeader>

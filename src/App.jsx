@@ -11,7 +11,7 @@ function App() {
     <Stack direction="horizontal">
       <Sidebar></Sidebar>
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/BudgetTracker/" element={<Home />}/>
         <Route path="/summary" element={<Summary />}/>
       </Routes>
     </Stack>
