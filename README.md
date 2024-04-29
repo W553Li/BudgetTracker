@@ -1,6 +1,6 @@
 A React + Vite budget tracker to help manage your budget
 
-Up at: https://w553li.github.io/BudgetTracker/
+Current running at: https://w553li.github.io/BudgetTracker/
 
 
 Known Issues and To Be Implemented:
