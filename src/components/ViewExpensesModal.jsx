@@ -36,6 +36,9 @@ export default function ViewExpensesModal ({budgetId, handleClose}) {
             chartData.push(amount)
             max -= expense.amount
         })
+        if (max < 0) {
+            max = 0
+        }
         var totalBudget = ["Unused", max]
         chartData.push(totalBudget)
     }

@@ -36,6 +36,9 @@ export default function Home() {
     var amount = [budget.name, chartAmount]
     chartData.push(amount)
     var unused = budget.max - chartAmount
+    if (unused < 0) {
+      unused = 0
+    }
     var unusedBudget = [budget.name + " Unused", unused]
     chartData.push(unusedBudget)
   })
