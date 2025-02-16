@@ -1,6 +1,7 @@
 import { Modal, Form, Button} from "react-bootstrap"
 import { useRef, useState } from "react"
 import { useBudgets, UNCATEGORIZED_BUDGET_ID} from "../contexts/BudgetsContext"
+import { useAuth } from "../contexts/AuthContext"
 
 export default function AddExpenseModal ({show, handleClose, defaultBudgetId}) {
     // Create variables and function to add an expense
@@ -9,7 +10,8 @@ export default function AddExpenseModal ({show, handleClose, defaultBudgetId}) {
     const budgetIdRef = useRef()
     const repeatRef = useRef()
     const dateRef = useRef()
-    const {addExpense, budgets} = useBudgets()
+    const {addExpense, budgets, updateAdd, uncategorizedBudgetId} = useBudgets()
+    const {session} = useAuth()
     function handleSubmit(e) {
         e.preventDefault() 
         addExpense ({
@@ -17,7 +19,8 @@ export default function AddExpenseModal ({show, handleClose, defaultBudgetId}) {
             amount: parseFloat(amountRef.current.value),
             budgetId: budgetIdRef.current.value,
             date: dateRef.current.value,
-            repeat: repeatRef.current.value
+            repeat: repeatRef.current.value,
+            UID: session.user.id
         })
         handleClose()
     }
@@ -48,7 +51,7 @@ export default function AddExpenseModal ({show, handleClose, defaultBudgetId}) {
                         <Form.Label>Budget</Form.Label>
                         {/* Create the various options for available budgets */}
                         <Form.Select defaultValue={defaultBudgetId} ref={budgetIdRef}>
-                            <option id={UNCATEGORIZED_BUDGET_ID}>Uncategorized</option>
+                            {/* <option id={uncategorizedBudgetId}>Uncategorized</option> */}
                             {/* iterate through all the current budgets and add them to the list of options */}
                             {budgets.map(budget => (
                                 <option key={budget.id} value={budget.id}>

@@ -73,7 +73,7 @@ export default function Summary() {
                     activeChart.push(month[0])
                     month.slice(1).forEach(expense => {
                         const expenseDate = expense[0].split(" ")
-                        const date = new Date(expenseDate[1])
+                        const date = new Date(expenseDate.at(-1))
                         if (date.getFullYear() == activeYear) {
                             activeChart.push(expense)
                         }

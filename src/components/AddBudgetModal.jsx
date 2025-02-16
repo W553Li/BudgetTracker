@@ -1,16 +1,19 @@
 import { Modal, Form, Button} from "react-bootstrap"
 import { useRef } from "react"
 import { useBudgets } from "../contexts/BudgetsContext"
+import { useAuth } from "../contexts/AuthContext"
 
 export default function AddBudgetModal ({show, handleClose}) {
     const nameRef = useRef()
     const maxRef = useRef()
     const {addBudget} = useBudgets()
+    const {session} = useAuth()
     function handleSubmit(e) {
         e.preventDefault() 
         addBudget ({
             name: nameRef.current.value,
-            max: parseFloat(maxRef.current.value)
+            max: parseFloat(maxRef.current.value),
+            UID: session.user.id
         })
         handleClose()
     }

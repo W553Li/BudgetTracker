@@ -2,13 +2,14 @@ import { Container, Stack, Button } from 'react-bootstrap'
 import BudgetCard from '../components/BudgetCard'
 import AddBudgetModal from '../components/AddBudgetModal'
 import AddExpenseModal from '../components/AddExpenseModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UNCATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetsContext'
 import UncategorizedBudgetCard from '../components/UncategorizedBudgetCard'
 import TotalBudgetCard from '../components/TotalBudgetCard'
 import ViewExpensesModal from '../components/ViewExpensesModal'
 import { Chart } from "react-google-charts"
 import repeatExpenses from '../hooks/repeatExpenses'
+import { useAuth } from "../contexts/AuthContext"
 
 export default function Home() {
   // Creating Dynamic variables for UI usage
@@ -18,10 +19,12 @@ export default function Home() {
   const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
 
   // Get functions and data from budgetcontext
-  const {budgets, getBudgetExpenses} = useBudgets()
+  const {budgets, getBudgetExpenses, uncategorizedBudgetId} = useBudgets()
 
   // Update to check for expenses that are supposed to repeat today
   repeatExpenses()
+
+  const {session} = useAuth()
 
   // Function to open expense modal
   function openAddExpenseModal(budgetId) {
@@ -32,6 +35,7 @@ export default function Home() {
   // Create chart with budget data
   var chartData = [["Budget", "Budget"]]
   budgets.forEach(budget => {
+    
     const chartAmount = getBudgetExpenses(budget.id).reduce((total, expense) => total + expense.amount, 0)
     var amount = [budget.name, chartAmount]
     chartData.push(amount)
@@ -72,7 +76,7 @@ export default function Home() {
         })}
         <UncategorizedBudgetCard 
           onAddExpenseClick={openAddExpenseModal}
-          onViewExpensesClick={() => setViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)}/>
+          onViewExpensesClick={() => setViewExpensesModalBudgetId(uncategorizedBudgetId)}/>
         <TotalBudgetCard/>
       </div>
 

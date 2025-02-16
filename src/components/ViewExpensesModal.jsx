@@ -4,12 +4,12 @@ import { currencyFormatter } from "../utils"
 import { Chart } from "react-google-charts"
 
 export default function ViewExpensesModal ({budgetId, handleClose}) {
-    const { getBudgetExpenses, budgets, deleteBudget, deleteExpense} = useBudgets()
+    const { getBudgetExpenses, budgets, deleteBudget, deleteExpense, uncategorizedBudgetId} = useBudgets()
 
     const expenses = getBudgetExpenses(budgetId)
 
-    const budget = UNCATEGORIZED_BUDGET_ID === budgetId 
-    ? { name: "Uncategorized", id: UNCATEGORIZED_BUDGET_ID} 
+    const budget = uncategorizedBudgetId === budgetId 
+    ? { name: "Uncategorized", id: uncategorizedBudgetId} 
     : budgets.find(b => b.id === budgetId)
 
 
@@ -25,7 +25,7 @@ export default function ViewExpensesModal ({budgetId, handleClose}) {
 
     // Creating the charts
     var chartData = [["Expenses", "Expenses"]]
-    if (budgetId == "Uncategorized") {
+    if (budgetId == uncategorizedBudgetId) {
         expenses.forEach(expense => {
             var amount = [expense.description + " " + expense.date, expense.amount]
             chartData.push(amount)
@@ -43,7 +43,6 @@ export default function ViewExpensesModal ({budgetId, handleClose}) {
         chartData.push(totalBudget)
     }
 
-
     // UI for viewing the expenses of a budget    
     return (
         // Create view for the component depending on if the budget uncategorized or not
@@ -52,7 +51,7 @@ export default function ViewExpensesModal ({budgetId, handleClose}) {
                 <Modal.Title>
                     <Stack direction="horizontal" gap="2">
                         <div>Expenses - {budget?.name} </div>
-                        {budgetId !== UNCATEGORIZED_BUDGET_ID && (
+                        {budgetId !== uncategorizedBudgetId && (
                             <Button onClick={() => {
                                 deleteBudget(budget) 
                                 handleClose()
