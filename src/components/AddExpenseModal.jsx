@@ -10,7 +10,7 @@ export default function AddExpenseModal ({show, handleClose, defaultBudgetId}) {
     const budgetIdRef = useRef()
     const repeatRef = useRef()
     const dateRef = useRef()
-    const {addExpense, budgets, updateAdd, uncategorizedBudgetId} = useBudgets()
+    const {addExpense, budgets} = useBudgets()
     const {session} = useAuth()
     function handleSubmit(e) {
         e.preventDefault() 

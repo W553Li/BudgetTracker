@@ -23,6 +23,23 @@ export const AuthContextProvider = ({ children }) => {
                 return {success: false, error};
             }
 
+            // create uncategorized budget
+            const fetchUncategorized = async (session) => {
+                const {data, error} = await supabase
+                    .from('budgets')
+                    .insert([{name: 'Uncategorized', max: null, UID: session.user.id}])
+                    .select()
+
+                if (insertError) {
+                    setUncategorizedBudgetId()
+                    return;
+                }
+
+                setUncategorizedBudgetId(data[0].id)
+            }
+
+            fetchUncategorized(data.session)
+
             return {success: true, data};
     }
 

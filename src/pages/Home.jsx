@@ -10,6 +10,7 @@ import ViewExpensesModal from '../components/ViewExpensesModal'
 import { Chart } from "react-google-charts"
 import repeatExpenses from '../hooks/repeatExpenses'
 import { useAuth } from "../contexts/AuthContext"
+import supabase from "../config/supabaseClient";
 
 export default function Home() {
   // Creating Dynamic variables for UI usage
@@ -19,12 +20,11 @@ export default function Home() {
   const [addExpenseModalBudgetId, setAddExpenseModalBudgetId] = useState()
 
   // Get functions and data from budgetcontext
-  const {budgets, getBudgetExpenses, uncategorizedBudgetId} = useBudgets()
+  const {budgets, getBudgetExpenses, uncategorizedBudgetId, getRepeatExpenses, addRepeatedExpense} = useBudgets()
+  const {session} = useAuth()
 
   // Update to check for expenses that are supposed to repeat today
-  repeatExpenses()
-
-  const {session} = useAuth()
+  // repeatExpenses();
 
   // Function to open expense modal
   function openAddExpenseModal(budgetId) {
